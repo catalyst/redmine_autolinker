@@ -1,6 +1,56 @@
 <%= error_messages_for 'link' %>
+<style>
+  span.pref {
+    font-family: monospace;
+  }
+</style>
 
 <div class="box tabular">
+  <p>
+    <ul>
+      <li>
+        The expression is the regular expression that will be linked on the issue fields.
+      </li>
+      <li>
+        Don't use catch-alls like <span class="pref">.*</span> - they will greedily match the
+        whole description. Instead use the non-greedy version: <span class="pref">.*?</span>
+      </li>
+      <li>
+        To insert part of the matched expression into the URL, capture it in a match
+        group.
+      </li>
+      <li>
+        Each match group will be added to the URL inside the escaped section with
+        the number of the group.
+        For example <span class="pref">ABC(\d+)</span> will insert the number matched into
+        <span class="pref">{{ 1 }}</span> in the URL.
+      </li>
+      <li>
+        The expression <span class="pref">ABC(\d+)</span> and the URL
+        <span class="pref">http://example.com/{{ 1 }}</span> will link the following urls:
+        <ul>
+          <li>
+            <span class="pref">ABC123</span> to <span class="pref">http://example.com/123</span>
+          </li>
+          <li>
+            <span class="pref">ABC8</span> to <span class="pref">http://example.com/8</span>
+          </li>
+        </ul>
+        But it will not link
+        <ul>
+          <li>
+            <span class="pref">ABC 123</span> because it has a space.
+            <span class="pref">ABC ?(\d+)</span> will allow for an optional space
+          </li>
+          <li>
+            <span class="pref">ABC</span> because there is no number.
+          </li>
+          <li>
+            <span class="pref">abc321</span> because the regex is case sensitive.
+          </li>
+        </ul>
+    </ul>
+  </p>
   <p><%= f.text_field :expression, :size => 30, required: true %></p>
   <p><%= f.text_field :url_template, :size => 30, required: true %></p>
 </div>

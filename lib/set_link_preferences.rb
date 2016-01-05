@@ -6,7 +6,7 @@ module RedmineAutoLinker
 
     def self.add_rule pat, url
       unless pat.is_a? Regexp
-        pat = pat.start_with?('/') && pat.end_with?('/') ? /#{pat[1..-2]}/ : /#{pat}/
+        pat = /#{pat}/
       end
       @@link_rules.push [pat, url]
     end
@@ -50,9 +50,11 @@ module RedmineAutoLinker
 
     def self.reload
       self.reset!
-      AlLink.all.each do |con|
-        if con.pattern && con.links_to
-          add_rule con.pattern, con.links_to
+      if const_defined? 'AlLink'
+        AlLink.all.each do |con|
+          if con.pattern && con.links_to
+            add_rule con.pattern, con.links_to
+          end
         end
       end
     end

@@ -1,11 +1,13 @@
-<table>
-  <tr>
-    <th><%= l :pattern_table_head %></th>
-    <th><%= l :url_table_tead %></th>
-    <th><%= l :actions_table_head %></th>
-  </tr>
-  <% AlLink.all.each do |link| %>
+<table class="list">
+  <thead>
     <tr>
+      <th><%= l :pattern_table_head %></th>
+      <th><%= l :url_table_tead %></th>
+      <th><%= l :actions_table_head %></th>
+    </tr>
+  </thead>
+  <% AlLink.all.each_with_index do |link, i| %>
+    <tr class="<%= i % 2 == 0 ? 'even' : 'odd' %>">
       <td><%= link_to link.expression, edit_al_link_path(link) %></td>
       <td><%= link.url_template %></td>
       <td class="buttons">
@@ -16,4 +18,4 @@
   <% end %>
 </table>
 
-<%= link_to l(:new_link_button), new_al_link_path %>
+<%= link_to l(:new_link_button), new_al_link_path, class: 'icon icon-add' %>
