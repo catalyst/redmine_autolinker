@@ -1,0 +1,19 @@
+<table>
+  <tr>
+    <th><%= l :pattern_table_head %></th>
+    <th><%= l :url_table_tead %></th>
+    <th><%= l :actions_table_head %></th>
+  </tr>
+  <% AlLink.all.each do |link| %>
+    <tr>
+      <td><%= link_to link.expression, edit_al_link_path(link) %></td>
+      <td><%= link.url_template %></td>
+      <td class="buttons">
+        <%= link_to l(:button_edit), edit_al_link_path(link), :class => 'icon icon-edit' %>
+        <%= delete_link al_link_path(link) %>
+      </td>
+    </tr>
+  <% end %>
+</table>
+
+<%= link_to l(:new_link_button), new_al_link_path %>
