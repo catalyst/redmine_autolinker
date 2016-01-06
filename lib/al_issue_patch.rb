@@ -1,18 +1,27 @@
 require_dependency 'issue'
+require_dependency 'journal'
 
-module RedmineAutoLinker
-  module IssuePatch
-    def self.included(base)
-      base.class_eval do
-        before_save :auto_link_description
-        def auto_link_description
-          if self.changed.include? 'description'
-            self.description = RedmineAutoLinker::AutoLinker.link self.description
-          end
-        end
+def auto_link(klass, fields)
+  fields = (fields.is_a?(Symbol) ? [fields] : fields).map {|f| f.to_sym }
+
+  klass.class_eval do
+    before_save :auto_link
+    class << self
+      attr_accessor :auto_linked_fields
+    end
+
+    def auto_link
+      # Intersection of changed fields and fields to link
+      to_link = self.changed.map {|c| c.to_sym } & (self.class.auto_linked_fields || [])
+      to_link.each do |field|
+        linked = RedmineAutoLinker::AutoLinker.link self.send(field)
+        self.send(:"#{field}=", linked)
       end
     end
   end
+  klass.auto_linked_fields = fields
 end
 
-Issue.send(:include, RedmineAutoLinker::IssuePatch) unless Issue.included_modules.include? RedmineAutoLinker::IssuePatch
+[[Issue, :description], [Journal, :notes]].each do |kl, fi|
+  auto_link kl, fi
+end

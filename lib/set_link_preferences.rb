@@ -50,11 +50,9 @@ module RedmineAutoLinker
 
     def self.reload
       self.reset!
-      if const_defined? 'AlLink'
-        AlLink.all.each do |con|
-          if con.pattern && con.links_to
-            add_rule con.pattern, con.links_to
-          end
+      AlLink.all.each do |con|
+        if con.pattern && con.links_to
+          add_rule con.pattern, con.links_to
         end
       end
     end
