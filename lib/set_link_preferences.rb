@@ -50,10 +50,15 @@ module RedmineAutoLinker
 
     def self.reload
       self.reset!
-      AlLink.all.each do |con|
-        if con.pattern && con.links_to
-          add_rule con.pattern, con.links_to
+      begin
+        AlLink.all.each do |con|
+          if con.pattern && con.links_to
+            add_rule con.pattern, con.links_to
+          end
         end
+      rescue Exception => e
+        puts e.message
+        puts "Running Redmine Autolinker migrations may fix this issue"
       end
     end
   end
