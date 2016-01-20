@@ -6,8 +6,8 @@ end
 Redmine::Plugin.register :redmine_autolinker do
   name 'Redmine Text Autolinking plugin'
   author 'Will Richardson'
-  description 'Auto-adds work request links into issue descriptions'
-  version '0.0.1'
+  description 'Automatically links content in fields based on regexes'
+  version '0.0.2'
 
   settings :partial => 'settings/autolinker'
 end
