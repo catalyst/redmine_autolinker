@@ -1,0 +1,7 @@
+<h2><%= l(:edit_link_title) %></h2>
+
+<%= labelled_form_for @link, :html => {method: :patch} do |f| %>
+  <%= render :partial => 'form', :locals => { :f => f } %>
+  <%= submit_tag 'Save' %>
+  <%= link_to l(:cancel), plugin_settings_path('redmine_autolinker') %>
+<% end %>

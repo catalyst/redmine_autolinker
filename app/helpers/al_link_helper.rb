@@ -1,0 +1,2 @@
+module AlLinkHelper
+end

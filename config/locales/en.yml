@@ -1,0 +1,13 @@
+# English strings go here for Rails i18n
+en:
+  field_expression: Expression to match
+  field_url_template: Url to link to
+  new_link_title: New Link
+  edit_link_title: Edit Link
+  pattern_table_head: Text Pattern
+  url_table_tead: Link URL
+  actions_table_head: Actions
+  button_edit: Edit
+  new_link_button: New Autolink
+  cancel: Cancel
+  save_link_text: Save
