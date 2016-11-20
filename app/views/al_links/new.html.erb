@@ -1,0 +1,7 @@
+<h2><%= l(:new_link_title) %></h2>
+
+<%= labelled_form_for @link, :html => {method: :post} do |f| %>
+  <%= render :partial => 'form', :locals => { :f => f } %>
+  <%= submit_tag l :save_link_text %>
+  <%= link_to l(:cancel), plugin_settings_path('redmine_autolinker') %>
+<% end %>
